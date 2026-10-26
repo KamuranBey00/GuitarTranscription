@@ -3,8 +3,8 @@ with each local guitar sample set; the TAB pipeline runs on every rendering and 
 against the same ground truth (repo convention: mir_eval note match, onset +-50 ms, offsets ignored).
 Run from the repo root: python -m scripts.eval.gv.test_b_resynth docs/results/gv/test_b_trimmed.csv
 """
+import argparse
 import csv
-import sys
 from pathlib import Path
 
 import mir_eval
@@ -12,10 +12,15 @@ import numpy as np
 import soundfile as sf
 
 from gtab.data.features import cqt_from_file
-from gtab.pipeline import analyze, load_models
-from gtab.utils import get_device
+from gtab.pipeline import analyze
 from scripts.eval.gv import samplers
+from scripts.eval.gv.candidate import add_args, load_candidate
 from scripts.eval.gv.paths import GAPS_TAB as TAB, GAPS_TEST as TEST, ICHIYANAGI, LIBRARIES, VIEWER_FONT
+
+
+def mdm_roots(gv: Path) -> dict[str, int] | None:
+    sfz = next((p for p in gv.rglob("*.sfz") if "MDM" in p.name), None)
+    return samplers.sfz_roots(sfz.read_text(encoding="utf-8")) if sfz else None
 
 
 def libraries() -> dict[str, list[samplers.Sample]]:
@@ -27,7 +32,8 @@ def libraries() -> dict[str, list[samplers.Sample]]:
         "custom_classical_sf2": samplers.from_soundfont(gv / "Custom Classical Guitar.sf2"),
         "ichiyanagi_sf3": samplers.from_soundfont(ICHIYANAGI),
         "mg_soft_nylon": samplers.from_wavs(wavs(lambda p: "MG_NylonGuitar" in p.name)),
-        "mdm_classical": samplers.from_wavs(wavs(lambda p: "MDM" in str(p))),
+        # the library's own SFZ note mapping: pYIN reads 9/37 bright MDM samples an octave high (README22)
+        "mdm_classical": samplers.from_wavs(wavs(lambda p: "MDM" in str(p)), mdm_roots(gv)),
         "rjs_lofi_nylon": samplers.from_wavs(wavs(lambda p: p.name.startswith("Nylon_"))),
     }
 
@@ -49,8 +55,9 @@ def score(an: dict, ref: np.ndarray, ref_string: np.ndarray) -> dict[str, float]
     return {"P": P, "R": R, "F": 2 * P * R / (P + R) if tp else 0.0, "string_acc": float(acc), "n_est": len(est)}
 
 
-def main(out: Path) -> None:
-    m, libs = load_models(get_device()), libraries()
+def main(out: Path, ckpt: str | None = None, cal: str | None = None, only: list[str] | None = None) -> None:
+    m, libs = load_candidate(ckpt, cal), libraries()
+    libs = {k: v for k, v in libs.items() if not only or k in only}
     ids = sorted({p.stem for p in TEST.glob("*.npz")} & {p.stem for p in TAB.glob("*.npz")})
     tmp = out.parent / "render_tmp.wav"
     with open(out, "w", newline="") as f:
@@ -73,4 +80,9 @@ def main(out: Path) -> None:
 
 
 if __name__ == "__main__":
-    main(Path(sys.argv[1]))
+    ap = argparse.ArgumentParser()
+    ap.add_argument("out", type=Path)
+    add_args(ap)
+    ap.add_argument("--libs", nargs="*", help="subset of sample sets (default: all)")
+    a = ap.parse_args()
+    main(a.out, a.ckpt, a.cal, a.libs)

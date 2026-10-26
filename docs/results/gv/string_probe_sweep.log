@@ -1,0 +1,29 @@
+product: all 0.528  fret>=5 0.601
+probs only     wd 0.001: CV all 0.538  fret>=5 0.338
+probs only     wd 0.01: CV all 0.547  fret>=5 0.340
+probs only     wd 0.1: CV all 0.557  fret>=5 0.352
+probs only     wd 1: CV all 0.534  fret>=5 0.393
+features only  wd 0.001: CV all 0.479  fret>=5 0.342
+features only  wd 0.01: CV all 0.495  fret>=5 0.355
+features only  wd 0.1: CV all 0.522  fret>=5 0.373
+features only  wd 1: CV all 0.540  fret>=5 0.383
+both           wd 0.001: CV all 0.484  fret>=5 0.349
+both           wd 0.01: CV all 0.495  fret>=5 0.354
+both           wd 0.1: CV all 0.522  fret>=5 0.376
+both           wd 1: CV all 0.539  fret>=5 0.380
+selected on YouTube CV: probs only, wd 0.1 (CV all 0.557)
+own T01: expert 0.444 | product 0.417 (n 72)   fret>=5 expert 0.333 | product 0.562 (n 48)
+own T02: expert 0.353 | product 0.176 (n 17)   fret>=5 expert 0.000 | product 0.333 (n 9)
+own E01: expert 0.591 | product 0.409 (n 22)   fret>=5 expert 0.250 | product 0.583 (n 12)
+own ALL: expert 0.459 | product 0.378 (n 111)   fret>=5 expert 0.275 | product 0.536 (n 69)
+--- hard notes up-weighted (fret>=5 x k), selected on YouTube CV fret>=5 accuracy
+probs only x3 wd 0.1: CV all 0.426  fret>=5 0.567
+probs only x3 wd 1: CV all 0.440  fret>=5 0.557
+probs only x10 wd 0.1: CV all 0.382  fret>=5 0.618
+probs only x10 wd 1: CV all 0.383  fret>=5 0.614
+both       x3 wd 0.1: CV all 0.484  fret>=5 0.446
+both       x3 wd 1: CV all 0.466  fret>=5 0.510
+both       x10 wd 0.1: CV all 0.413  fret>=5 0.517
+both       x10 wd 1: CV all 0.379  fret>=5 0.590
+selected: probs only x10 wd 0.1 (CV fret>=5 0.618; product 0.601)
+own ALL: expert 0.351 | product 0.378   fret>=5 expert 0.565 | product 0.536

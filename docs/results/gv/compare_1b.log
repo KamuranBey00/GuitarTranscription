@@ -1,0 +1,61 @@
+== gaps_val (decoding: active gaps_val selection)
+  tabcrnn_s1b_l_ep1.pt   mix 0.7460  note P 0.8314 R 0.7758 F1 0.8027  frame F1 0.6894  fast-repeat miss 0.500 (n 1667)
+    ghosts 4481: overtone 1082, fragment 1441, open string 498, displaced 447, other 1013
+  tabcrnn_s1b_l_ep2.pt   mix 0.7454  note P 0.8360 R 0.7713 F1 0.8024  frame F1 0.6884  fast-repeat miss 0.506 (n 1667)
+    ghosts 4311: overtone 1060, fragment 1356, open string 473, displaced 452, other 970
+  tabcrnn_s1b_l_ep3.pt   mix 0.7473  note P 0.8348 R 0.7769 F1 0.8048  frame F1 0.6899  fast-repeat miss 0.510 (n 1667)
+    ghosts 4379: overtone 1159, fragment 1301, open string 439, displaced 441, other 1039
+  tabcrnn_s1b_l_ep4.pt   mix 0.7462  note P 0.8078 R 0.7931 F1 0.8004  frame F1 0.6921  fast-repeat miss 0.467 (n 1667)
+    ghosts 5376: overtone 1328, fragment 1887, open string 543, displaced 467, other 1151
+  tabcrnn_s1b_l_ep5.pt   mix 0.7449  note P 0.8079 R 0.7921 F1 0.8000  frame F1 0.6899  fast-repeat miss 0.474 (n 1667)
+    ghosts 5365: overtone 1442, fragment 1787, open string 522, displaced 474, other 1140
+  tabcrnn_s1b_l_ep6.pt   mix 0.7488  note P 0.8277 R 0.7853 F1 0.8059  frame F1 0.6916  fast-repeat miss 0.493 (n 1667)
+    ghosts 4659: overtone 1253, fragment 1418, open string 494, displaced 446, other 1048
+  tabcrnn_s1b_l_ep7.pt   mix 0.7469  note P 0.8186 R 0.7873 F1 0.8026  frame F1 0.6912  fast-repeat miss 0.475 (n 1667)
+    ghosts 4969: overtone 1309, fragment 1614, open string 523, displaced 461, other 1062
+  tabcrnn_s1b_l_ep8.pt   mix 0.7515  note P 0.8251 R 0.7907 F1 0.8076  frame F1 0.6954  fast-repeat miss 0.481 (n 1667)
+    ghosts 4774: overtone 1246, fragment 1512, open string 481, displaced 444, other 1091
+  tabcrnn_s1b_l_ep9.pt   mix 0.7515  note P 0.8246 R 0.7928 F1 0.8084  frame F1 0.6946  fast-repeat miss 0.475 (n 1667)
+    ghosts 4806: overtone 1236, fragment 1565, open string 497, displaced 424, other 1084
+  tabcrnn_s1b_l_ep10.pt  mix 0.7483  note P 0.8160 R 0.7919 F1 0.8038  frame F1 0.6928  fast-repeat miss 0.471 (n 1667)
+    ghosts 5089: overtone 1328, fragment 1669, open string 527, displaced 451, other 1114
+  tabcrnn_s1b_l_ep11.pt  mix 0.7496  note P 0.8228 R 0.7905 F1 0.8063  frame F1 0.6928  fast-repeat miss 0.478 (n 1667)
+    ghosts 4849: overtone 1322, fragment 1501, open string 502, displaced 439, other 1085
+  tabcrnn_s1b_l_ep12.pt  mix 0.7496  note P 0.8175 R 0.7940 F1 0.8056  frame F1 0.6935  fast-repeat miss 0.469 (n 1667)
+    ghosts 5051: overtone 1350, fragment 1623, open string 539, displaced 438, other 1101
+  tabcrnn_s1b_l_ep13.pt  mix 0.7506  note P 0.8169 R 0.7969 F1 0.8068  frame F1 0.6944  fast-repeat miss 0.467 (n 1667)
+    ghosts 5088: overtone 1310, fragment 1679, open string 537, displaced 439, other 1123
+  tabcrnn_s1b_l_ep14.pt  mix 0.7470  note P 0.8137 R 0.7919 F1 0.8027  frame F1 0.6914  fast-repeat miss 0.472 (n 1667)
+    ghosts 5167: overtone 1355, fragment 1730, open string 518, displaced 441, other 1123
+  tabcrnn_s1b_l_ep15.pt  mix 0.7505  note P 0.8174 R 0.7964 F1 0.8067  frame F1 0.6944  fast-repeat miss 0.467 (n 1667)
+    ghosts 5070: overtone 1335, fragment 1651, open string 537, displaced 438, other 1109
+  tabcrnn_g1s2_l_ep1.pt  mix 0.7414  note P 0.8009 R 0.7927 F1 0.7968  frame F1 0.6860  fast-repeat miss 0.455 (n 1667)
+    ghosts 5616: overtone 1326, fragment 2065, open string 603, displaced 446, other 1176
+  tabcrnn_g1s2_l_ep2.pt  mix 0.7453  note P 0.8227 R 0.7873 F1 0.8046  frame F1 0.6860  fast-repeat miss 0.469 (n 1667)
+    ghosts 4834: overtone 1205, fragment 1640, open string 498, displaced 412, other 1079
+  tabcrnn_g1s2_l_ep3.pt  mix 0.7429  note P 0.8140 R 0.7892 F1 0.8014  frame F1 0.6845  fast-repeat miss 0.467 (n 1667)
+    ghosts 5139: overtone 1255, fragment 1820, open string 517, displaced 436, other 1111
+  tabcrnn_g1s2_l_ep4.pt  mix 0.7472  note P 0.8189 R 0.7933 F1 0.8059  frame F1 0.6885  fast-repeat miss 0.468 (n 1667)
+    ghosts 4999: overtone 1274, fragment 1685, open string 519, displaced 422, other 1099
+  tabcrnn_g1s2_l_ep5.pt  mix 0.7459  note P 0.7985 R 0.8040 F1 0.8012  frame F1 0.6905  fast-repeat miss 0.454 (n 1667)
+    ghosts 5780: overtone 1425, fragment 2175, open string 591, displaced 431, other 1158
+  tabcrnn_g1s2_l_ep6.pt  mix 0.7459  note P 0.8130 R 0.7950 F1 0.8039  frame F1 0.6880  fast-repeat miss 0.464 (n 1667)
+    ghosts 5211: overtone 1268, fragment 1829, open string 530, displaced 430, other 1154
+  tabcrnn_g1s2_l_ep7.pt  mix 0.7479  note P 0.8233 R 0.7923 F1 0.8075  frame F1 0.6883  fast-repeat miss 0.479 (n 1667)
+    ghosts 4845: overtone 1218, fragment 1617, open string 496, displaced 422, other 1092
+  tabcrnn_g1s2_l_ep8.pt  mix 0.7499  note P 0.8255 R 0.7924 F1 0.8086  frame F1 0.6912  fast-repeat miss 0.472 (n 1667)
+    ghosts 4772: overtone 1154, fragment 1610, open string 504, displaced 422, other 1082
+  tabcrnn_g1s2_l_ep9.pt  mix 0.7499  note P 0.8328 R 0.7882 F1 0.8099  frame F1 0.6900  fast-repeat miss 0.477 (n 1667)
+    ghosts 4509: overtone 1108, fragment 1474, open string 483, displaced 416, other 1028
+  tabcrnn_g1s2_l_ep10.pt mix 0.7496  note P 0.8153 R 0.7990 F1 0.8071  frame F1 0.6921  fast-repeat miss 0.455 (n 1667)
+    ghosts 5156: overtone 1272, fragment 1793, open string 535, displaced 437, other 1119
+  tabcrnn_g1s2_l_ep11.pt mix 0.7506  note P 0.8219 R 0.7969 F1 0.8092  frame F1 0.6919  fast-repeat miss 0.473 (n 1667)
+    ghosts 4920: overtone 1240, fragment 1628, open string 504, displaced 428, other 1120
+  tabcrnn_g1s2_l_ep12.pt mix 0.7482  note P 0.8242 R 0.7910 F1 0.8073  frame F1 0.6892  fast-repeat miss 0.476 (n 1667)
+    ghosts 4807: overtone 1203, fragment 1646, open string 481, displaced 414, other 1063
+  tabcrnn_g1s2_l_ep13.pt mix 0.7504  note P 0.8262 R 0.7939 F1 0.8097  frame F1 0.6910  fast-repeat miss 0.473 (n 1667)
+    ghosts 4758: overtone 1201, fragment 1588, open string 482, displaced 413, other 1074
+  tabcrnn_g1s2_l_ep14.pt mix 0.7499  note P 0.8234 R 0.7952 F1 0.8090  frame F1 0.6908  fast-repeat miss 0.467 (n 1667)
+    ghosts 4861: overtone 1212, fragment 1663, open string 501, displaced 414, other 1071
+  tabcrnn_g1s2_l_ep15.pt mix 0.7518  note P 0.8243 R 0.7973 F1 0.8106  frame F1 0.6930  fast-repeat miss 0.467 (n 1667)
+    ghosts 4841: overtone 1207, fragment 1626, open string 506, displaced 421, other 1081

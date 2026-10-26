@@ -1,0 +1,54 @@
+E01-HerTel0-5-2                          ses      expected  72 model  37  found 0.500  matched 0.973  string 0.750
+E01-HerTel0-5-2                          edisyon  expected  72 model  37  found 0.500  matched 0.973  string 0.806
+E01-HerTel0-5                            ses      expected  72 model  39  found 0.514  matched 0.949  string 0.676
+E01-HerTel0-5                            edisyon  expected  72 model  39  found 0.514  matched 0.949  string 0.784
+E02-Ayn nota farkl tel -1                ses      expected  30 model  11  found 0.300  matched 0.818  string 0.222
+E02-Ayn nota farkl tel -1                edisyon  expected  30 model  11  found 0.300  matched 0.818  string 0.444
+E02-Ayn tel 4 farkl tel-2                ses      expected  30 model  11  found 0.300  matched 0.818  string 0.000
+E02-Ayn tel 4 farkl tel-2                edisyon  expected  30 model  11  found 0.300  matched 0.818  string 0.222
+E03-Do major Gam -1                      ses      expected  23 model  18  found 0.565  matched 0.722  string 0.385
+E03-Do major Gam -1                      edisyon  expected  23 model  18  found 0.565  matched 0.722  string 1.000
+E03-Do major Gam -2                      ses      expected  23 model  19  found 0.565  matched 0.684  string 0.462
+E03-Do major Gam -2                      edisyon  expected  23 model  19  found 0.565  matched 0.684  string 1.000
+E04-Arpej- Dm de ilk 0 unutuluyor        ses      expected  48 model  65  found 0.771  matched 0.569  string 0.378
+E04-Arpej- Dm de ilk 0 unutuluyor        edisyon  expected  48 model  65  found 0.771  matched 0.569  string 1.000
+E04-Arpej-2 Bazen ritim kacyor ama okey  ses      expected  48 model  60  found 0.750  matched 0.600  string 0.389
+E04-Arpej-2 Bazen ritim kacyor ama okey  edisyon  expected  48 model  60  found 0.750  matched 0.600  string 1.000
+E05- 2,3,4,6 sesli akor ilk deneme       ses      expected  30 model  33  found 0.567  matched 0.515  string 0.706
+E05- 2,3,4,6 sesli akor ilk deneme       edisyon  expected  30 model  33  found 0.567  matched 0.515  string 1.000
+E05-2,3,4,6 ikinci deneme                ses      expected  30 model  35  found 0.633  matched 0.543  string 0.684
+E05-2,3,4,6 ikinci deneme                edisyon  expected  30 model  35  found 0.633  matched 0.543  string 1.000
+E15-ilk kayt autmn leaves                ses      expected 207 model 101  found 0.391  matched 0.802  string 0.494
+E15-ilk kayt autmn leaves                edisyon  expected 207 model 101  found 0.391  matched 0.802  string 0.988
+T01 - sadece ilk tel 0. Nota kacyor kala ses      expected  78 model  77  found 0.962  matched 0.974  string 0.453
+T01 - sadece ilk tel 0. Nota kacyor kala edisyon  expected  78 model  77  found 0.962  matched 0.974  string 0.453
+T02 - blok2                              ses      expected   6 model  10  found 1.000  matched 0.600  string 0.167
+T02 - blok2                              edisyon  expected   6 model  10  found 1.000  matched 0.600  string 0.333
+T02- Blok-1                              ses      expected   6 model  12  found 1.000  matched 0.500  string 0.333
+T02- Blok-1                              edisyon  expected   6 model  12  found 1.000  matched 0.500  string 0.333
+T02- blok5                               ses      expected   6 model   8  found 1.000  matched 0.750  string 0.333
+T02- blok5                               edisyon  expected   6 model   8  found 1.000  matched 0.750  string 0.500
+T02-Blok6                                ses      expected   6 model  15  found 1.000  matched 0.400  string 0.333
+T02-Blok6                                edisyon  expected   6 model  15  found 1.000  matched 0.400  string 0.333
+T02-blok3                                ses      expected   6 model   7  found 1.000  matched 0.857  string 0.333
+T02-blok3                                edisyon  expected   6 model   7  found 1.000  matched 0.857  string 0.333
+T02-blok4                                ses      expected   6 model  12  found 1.000  matched 0.500  string 0.333
+T02-blok4                                edisyon  expected   6 model  12  found 1.000  matched 0.500  string 0.333
+  E01 ses      found 0.507  string 0.713
+  E02 ses      found 0.300  string 0.111
+  E03 ses      found 0.565  string 0.423
+  E04 ses      found 0.760  string 0.384
+  E05 ses      found 0.600  string 0.695
+  E15 ses      found 0.391  string 0.494
+  T01 ses      found 0.962  string 0.453
+  T02 ses      found 1.000  string 0.306
+ALL ses      found 0.575  matched 0.786  string 0.413  (weighted by expected notes; string = mean)
+  E01 edisyon  found 0.507  string 0.795
+  E02 edisyon  found 0.300  string 0.333
+  E03 edisyon  found 0.565  string 1.000
+  E04 edisyon  found 0.760  string 1.000
+  E05 edisyon  found 0.600  string 1.000
+  E15 edisyon  found 0.391  string 0.988
+  T01 edisyon  found 0.962  string 0.453
+  T02 edisyon  found 1.000  string 0.361
+ALL edisyon  found 0.575  matched 0.786  string 0.659  (weighted by expected notes; string = mean)

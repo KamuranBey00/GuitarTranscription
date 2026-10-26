@@ -3,18 +3,18 @@ Both TAB modes are scored: "ses" (heard position) and "edisyon" (edition suggest
 Run from the repo root: python -m scripts.eval.gv.test_e_real_vs_tab docs/results/gv/pairs_commons2.tsv <out_csv>
 (pairs.tsv: audio_path <TAB> tab_txt_path, repo-relative)
 """
+import argparse
 import csv
-import sys
 from pathlib import Path
 
 from gtab.data.features import cqt_from_file
-from gtab.pipeline import analyze, load_models
-from gtab.utils import get_device
+from gtab.pipeline import analyze
 from scripts.eval.gv import classtab
+from scripts.eval.gv.candidate import add_args, load_candidate
 
 
-def main(pairs_file: Path, out: Path) -> None:
-    m = load_models(get_device())
+def main(pairs_file: Path, out: Path, ckpt: str | None = None, cal: str | None = None) -> None:
+    m = load_candidate(ckpt, cal)
     pairs = [l.split("\t") for l in pairs_file.read_text(encoding="utf-8").splitlines() if l.strip()]
     with open(out, "w", newline="", encoding="utf-8") as f:
         w = None
@@ -34,4 +34,9 @@ def main(pairs_file: Path, out: Path) -> None:
 
 
 if __name__ == "__main__":
-    main(Path(sys.argv[1]), Path(sys.argv[2]))
+    ap = argparse.ArgumentParser()
+    ap.add_argument("pairs", type=Path)
+    ap.add_argument("out", type=Path)
+    add_args(ap)
+    a = ap.parse_args()
+    main(a.pairs, a.out, a.ckpt, a.cal)

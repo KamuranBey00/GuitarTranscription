@@ -1,0 +1,6 @@
+YouTube: 2209 labelled notes from 63 videos; per string [452, 207, 301, 302, 433, 514]
+YouTube 5-fold CV by video   expert 0.482 (n 1965) | product 0.528 (n 1965)   ||   fret>=5: expert 0.342 (n 968) | product 0.601 (n 968)
+own T01 (train: all YouTube) expert 0.361 (n 72) | product 0.417 (n 72)   ||   fret>=5: expert 0.312 (n 48) | product 0.562 (n 48)
+own T02 (train: all YouTube) expert 0.471 (n 17) | product 0.176 (n 17)   ||   fret>=5: expert 0.556 (n 9) | product 0.333 (n 9)
+own E01 (train: all YouTube) expert 0.409 (n 22) | product 0.409 (n 22)   ||   fret>=5: expert 0.250 (n 12) | product 0.583 (n 12)
+own ALL (train: all YouTube) expert 0.387 (n 111) | product 0.378 (n 111)   ||   fret>=5: expert 0.333 (n 69) | product 0.536 (n 69)

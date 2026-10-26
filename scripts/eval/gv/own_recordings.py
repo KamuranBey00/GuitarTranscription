@@ -19,12 +19,9 @@ import numpy as np
 
 from gtab.core.instrument import STANDARD_6
 from gtab.data.features import cqt_from_file
-from gtab.evaluation.pitch_eval import load_selection
-from gtab.pipeline import analyze, load_models
-from gtab.models.inference import load_model
-from gtab.paths import ckpt_path
-from gtab.utils import get_device
+from gtab.pipeline import analyze
 from scripts.eval.gv import classtab
+from scripts.eval.gv.candidate import add_args, load_candidate
 from scripts.eval.gv.paths import RAW
 
 WAV = RAW / "own_wav"
@@ -114,16 +111,8 @@ def tab_array(groups: list[list[tuple[int, int]]]) -> np.ndarray:
     return np.array([(k, p, s) for k, g in enumerate(groups) for p, s in g], float)
 
 
-def models(ckpt: str | None, cal: str | None) -> dict:
-    m = load_models(get_device())
-    if ckpt:                                   # candidate model: acoustic + its decoding, rest of the stack unchanged
-        m["model"] = load_model("crnn", m["device"], ckpt)[0]
-        m["sel"] = load_selection(ckpt_path(cal))["gaps_val"]
-    return m
-
-
 def main(ckpt: str | None, cal: str | None) -> None:
-    m = models(ckpt, cal)
+    m = load_candidate(ckpt, cal)
     rows = []
     for wav in sorted(glob.glob(str(WAV / "*.wav"))):
         ex, groups = Path(wav).name[:3], expected_for(Path(wav).stem)
@@ -151,7 +140,6 @@ def main(ckpt: str | None, cal: str | None) -> None:
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--ckpt")
-    ap.add_argument("--cal")
+    add_args(ap)
     a = ap.parse_args()
     main(a.ckpt, a.cal)
