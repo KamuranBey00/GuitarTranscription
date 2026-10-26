@@ -147,6 +147,16 @@ class TestScoreNotes(unittest.TestCase):
         self.assertEqual(notes[0]["finger"], 3)
         np.testing.assert_allclose(lens, [TPQ])
 
+    def test_one_part_two_staves(self):
+        # our writer (README23): staff 1 notation (+finger), <backup>, staff 2 TAB in the same part
+        body = (note("G", 3, 1, finger=3).replace("</duration>", "</duration><staff>1</staff>") +
+                "<backup><duration>1</duration></backup>" +
+                note("G", 3, 1, string=3, fret=0).replace("</duration>", "</duration><staff>2</staff>"))
+        order, lens, notes, _ = score_notes(self._write(score([measure(body, tab_attrs())])))
+        self.assertEqual(len(notes), 1)                       # notation copy is not counted as a second TAB note
+        self.assertEqual((notes[0]["pitch"], notes[0]["string"], notes[0]["finger"]), (midi("G", 3), 3, 3))
+        np.testing.assert_allclose(lens, [TPQ])               # <backup> rewinds: the bar is still one beat
+
     def test_written_pitch_is_overridden_by_tab(self):
         # a wrong written pitch must not matter: sounding pitch comes from string + fret
         xml = score([measure(note("C", 4, 1, string=5, fret=2), tab_attrs())])

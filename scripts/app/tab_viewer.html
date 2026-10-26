@@ -42,10 +42,10 @@
   <h1>TAB görüntüleyici</h1>
   <p class="help"><b>TAB nasıl okunur:</b> 6 çizgi = 6 tel (en alttaki çizgi en kalın tel), çizgi üzerindeki sayı = basılacak perde
      (0 = boş tel). Sol el parmak numaraları (1 işaret, 2 orta, 3 yüzük, 4 serçe) yalnız "edisyon" modu çıktısında nota satırının üstünde görünür.
-     <code>transcribe</code> ile üretilen <code>.musicxml</code> dosyasını seç. İnternet gerekir (alphaTab CDN'den yüklenir; naylon gitar ses bankası <code>soundfont/</code> klasöründen).</p>
+     <code>transcribe</code> ile üretilen <code>.musicxml</code> ya da <code>.gp</code> dosyasını seç. İnternet gerekir (alphaTab CDN'den yüklenir; naylon gitar ses bankası <code>soundfont/</code> klasöründen).</p>
 
   <div class="bar">
-    <input type="file" id="file" accept=".musicxml,.xml,.mxl">
+    <input type="file" id="file" accept=".musicxml,.xml,.mxl,.gp">
     <label>Görünüm
       <select id="mode">
         <option value="scoretab">Nota + TAB</option>
@@ -65,7 +65,7 @@
 
   <div id="info"><span>Dosya seçilmedi.</span></div>
 
-  <div id="viewport"><div id="empty">Bir <code>.musicxml</code> dosyası seç.</div><div id="score"></div></div>
+  <div id="viewport"><div id="empty">Bir <code>.musicxml</code> ya da <code>.gp</code> dosyası seç.</div><div id="score"></div></div>
 </main>
 
 <script>
@@ -168,7 +168,40 @@
     }
   }
 
+  // tek part + iki portre (README23): alphaTab bir izin TÜM portrelerini çalar -> her nota iki kez duyulurdu ve tek
+  // portre susturulamaz. Nota portresi kalır (8vb anahtarı, 1. ses, parmaklar onda); TAB portresinden tel + perde no ve
+  // akort ona kopyalanır, TAB portresi atılır, nota portresi TAB'ı da çizer. Eşleme: aynı ölçü + ölçü içi başlangıç +
+  // perde (ses indeksi değil: TAB notaları <voice>5 yüzünden 5. seste durur). Eski iki izli dosyalar dokunulmaz.
+  function mergeStaves(s) {
+    for (const t of s.tracks) {
+      const std = t.staves.find(st => st.showStandardNotation && !st.showTablature);
+      const tab = t.staves.find(st => st.showTablature);
+      if (!std || !tab) continue;
+      const pitchOf = new Map();                                 // perde TAB'a geçince değişmesin: önce oku
+      std.bars.forEach((bar, b) => {
+        const at = new Map();                                    // ölçü içi başlangıç -> o andaki TAB notaları
+        for (const v of tab.bars[b].voices) for (const beat of v.beats)
+          at.set(beat.displayStart, (at.get(beat.displayStart) || []).concat(beat.notes));
+        for (const v of bar.voices) for (const beat of v.beats) for (const n of beat.notes) {
+          const pool = at.get(beat.displayStart) || [];
+          const k = pool.findIndex(x => x.realValue === n.realValue);
+          if (k < 0) continue;                                   // konumsuz nota: yalnız notada görünür
+          pitchOf.set(n, n.realValue);
+          n.string = pool[k].string; n.fret = pool[k].fret;
+          pool.splice(k, 1);                                     // aynı perdeden iki nota (unison) ayrı tellere
+        }
+      });
+      std.stringTuning = tab.stringTuning;
+      std.capo = tab.capo;
+      std.showTablature = true;
+      t.staves = [std];
+      std.index = 0;
+      for (const [n, p] of pitchOf) if (n.realValue !== p) console.warn("TAB perdesi notadan farkli", p, n.realValue);
+    }
+  }
+
   api.scoreLoaded.on(s => {
+    mergeStaves(s);
     forceNylon(s);
     score = s; showInfo(s);
     $("empty").style.display = "none";

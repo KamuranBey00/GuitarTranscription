@@ -1,0 +1,24 @@
+Guitar Pro kurali a=1.0 b=0.5 span<=4 | edisyon: edition_seq.pt | ses: tabcrnn_deep2.pt
+
+1) TEL UYUMU (gercek notalar; partisyonda etiketli notalar)
+  yontem                                             gaps_val      gaps_test  GuitarSet val
+  -----------------------------------------------------------------------------------------
+  naif (en dusuk perde)                                 0.702          0.745          0.206
+  GUITAR PRO kurali (taklit)                            0.726          0.797          0.214
+  EDISYON dizi modeli  [edisyon onerisi]                0.766          0.815          0.425
+  ses / greedy         [duyulan konum]                  0.610          0.629          0.878
+
+2) GUITAR PRO KURALIYLA AYNI YER (tum notalar; referans: GUITAR PRO kurali (taklit))
+  yontem                                             gaps_val      gaps_test  GuitarSet val
+  -----------------------------------------------------------------------------------------
+  naif (en dusuk perde)                                 0.948          0.933          0.987
+  EDISYON dizi modeli  [edisyon onerisi]                0.870          0.897          0.655
+  ses / greedy         [duyulan konum]                  0.581          0.573          0.231
+
+3) UCTAN UCA (gaps_test; deep2 notalari; etiketli 14082, bulunan 11447)
+  yontem                                        tel: bulunanlarda  tum etiketlilerde
+  ----------------------------------------------------------------------------------
+  naif (en dusuk perde)                                     0.747              0.607
+  GUITAR PRO kurali (taklit)                                0.777              0.632
+  EDISYON dizi modeli  [edisyon onerisi]                    0.803              0.653
+  ses / greedy         [duyulan konum]                      0.621              0.505

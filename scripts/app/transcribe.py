@@ -11,12 +11,15 @@ Tap modu: --taps dosya = kaydı dinlerken İLK ÖLÇÜ BAŞINDAN başlayarak her
 ya da virgülle ayrılmış). Gecikme, kaçan / fazla dokunuş ve ölçü fazı otomatik düzeltilir; --bpm gerekmez.
 Akort / kapo (Katman 6 Adım 3): --tuning DADGBE (pesten tize; ya da "D2 A2 D3 G3 B3 E4"), --capo k (TAB perdeleri kapodan).
 Model standart akortta eğitildi: E2'nin altındaki notalar (drop-D'de D2, D#2) bulunamaz.
+Guitar Pro (README23 4.2): --out x.gp -> naylon gitar izi + kayıt gömülü + her ölçü başında senkron noktası (TAB kaydı
+izleyerek akar); --no-audio ile yalnız nota. Girdi .npz ise ses gömülmez.
 
 Çalıştırma:
     python -m scripts.app.transcribe kayit.wav --bpm 80 --meter 3/4
     python -m scripts.app.transcribe data/cache/gaps_test/<id>.npz --bpm 66 --meter 6/8 --mode edisyon --out cikti.musicxml
     python -m scripts.app.transcribe kayit.wav --taps dokunuslar.txt --meter 3/4
     python -m scripts.app.transcribe kayit.wav --bpm 80 --meter 3/4 --tuning DADGBE --capo 2
+    python -m scripts.app.transcribe kayit.wav --bpm 80 --meter 3/4 --out kayit.gp
 """
 
 import argparse
@@ -29,11 +32,13 @@ from gtab.data.features import cqt_from_file
 from gtab.data.separate import cqt_from_file_separated
 from gtab.decoding.taps import load_taps
 from gtab.pipeline import load_models, transcribe
+from gtab.render.gpfile import bar_times, write_gp
 from gtab.render.musicxml import write_musicxml
+from gtab.render.score import meter_of_signature
 from gtab.utils import get_device
 
 
-def main(src, bpm, meter, mode, out, shift, taps_file, tuning="EADGBE", capo=0, separate="none"):
+def main(src, bpm, meter, mode, out, shift, taps_file, tuning="EADGBE", capo=0, separate="none", no_audio=False):
     sig = tuple(int(x) for x in meter.split("/"))
     if src.endswith(".npz"):
         if separate != "none":
@@ -50,8 +55,17 @@ def main(src, bpm, meter, mode, out, shift, taps_file, tuning="EADGBE", capo=0, 
     r = transcribe(cqt, m, bpm, sig, mode, shift=shift, taps=taps, instrument=with_capo(instr, capo))
     bpm = bpm or 60 / np.median(np.diff(r["beats"]))                    # tap modu: metronom işareti dokunuşlardan
     out = out or os.path.splitext(os.path.basename(src))[0] + ".musicxml"
-    write_musicxml(out, r["measures"], r["notes"][:, 2].astype(int), r["string"], r["fret"], sig, r["beat_q"], bpm=bpm,
-                   finger=r["finger"] if mode == "edisyon" else None, title=os.path.basename(src), instrument=instr, capo=capo)
+    args = (out, r["measures"], r["notes"][:, 2].astype(int), r["string"], r["fret"], sig, r["beat_q"])
+    kw = dict(bpm=bpm, finger=r["finger"] if mode == "edisyon" else None, title=os.path.basename(src),
+              instrument=instr, capo=capo)
+    if out.lower().endswith(".gp"):                                     # README23 4.2: Guitar Pro, kayıt + ölçü senkronu
+        audio = None if (no_audio or src.endswith(".npz")) else src
+        times = bar_times(r["beats"], r["first_beat"], meter_of_signature(sig)[0], len(r["measures"]))
+        info = write_gp(*args, audio=audio, times=times, **kw)
+        extra = f", {info['unplaced']} konumsuz notaya en dusuk perde" if info["unplaced"] else ""
+        print(f"  .gp: gomulu ses {'var' if info['audio'] else 'yok'}, {info['sync']} senkron noktasi{extra}")
+    else:
+        write_musicxml(*args, **kw)
     n_pos = int((r["string"] >= 0).sum())
     print(f"{len(r['notes'])} nota ({n_pos} tel/perde konumlu) | {len(r['beats'])} vurus, "
           f"{len(r['downbeats'])} olcu basi | {len(r['measures'])} olcu {meter} | mod {mode}"
@@ -71,7 +85,8 @@ if __name__ == "__main__":
     ap.add_argument("--capo", type=int, default=0, help="kapo perdesi (TAB perdeleri kapodan sayilir)")
     ap.add_argument("--separate", default="none", choices=["none", "mix-vocals"],
                     help="sarkili kayit: mix-vocals = vokali cikar (Demucs; GPU'da hizli, CPU'da yavas)")
+    ap.add_argument("--no-audio", action="store_true", help=".gp ciktisina kaydi gomme (yalniz nota)")
     a = ap.parse_args()
     if a.bpm is None and a.taps is None:
         ap.error("--bpm ya da --taps gerekli")
-    main(a.src, a.bpm, a.meter, a.mode, a.out, a.shift, a.taps, a.tuning, a.capo, a.separate)
+    main(a.src, a.bpm, a.meter, a.mode, a.out, a.shift, a.taps, a.tuning, a.capo, a.separate, a.no_audio)

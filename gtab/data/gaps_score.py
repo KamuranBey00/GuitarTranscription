@@ -45,11 +45,19 @@ def _nums(s):
     return {int(x) for x in s.replace(" ", "").split(",") if x.isdigit()}
 
 
-def parse_part(part):
+def staves_of(part):
+    """Partta kullanılan <staff> numaraları; tek portreli (etiketsiz) part için [None]."""
+    nums = sorted({int(s.text) for s in part.iter("staff")})
+    return nums or [None]
+
+
+def parse_part(part, staff=None):
     """
     Bir <part> -> ölçü listesi. Her ölçü: dict(len=tick, notes=[dict(tick, pitch, string, fret, finger)],
     fwd, bwd (tekrar sayısı | 0), end (son bölüm numaraları | None), transpose).
     Bağ devamı (tie stop) notaları atlanır (yeni vuruş değil); süs notaları sıfır süreli, ana notanın tick'inde.
+    staff verilirse yalnız o portrenin notaları alınır (iki portreli part, README23); zaman yine tüm notalardan
+    yürür çünkü <backup> iki portrenin ortak saatini geri sarar.
     """
     div, tr, tuning = 1, 0, None
     meas, ending = [], None
@@ -79,7 +87,8 @@ def parse_part(part):
                         pos += dur
                 p = el.find("pitch")
                 tie_stop = any(t.get("type") == "stop" for t in el.findall("tie"))
-                if p is not None and not tie_stop:
+                same_staff = staff is None or int(el.findtext("staff") or 1) == staff
+                if p is not None and not tie_stop and same_staff:
                     t = el.find("notations/technical")
                     f = t.findtext("fingering") if t is not None else None
                     w = _midi(p.findtext("step"), p.findtext("octave"), p.findtext("alter"))
@@ -143,7 +152,8 @@ def score_notes(xml_path, order=None):
     order: verilirse tekrar işaretleri yerine bu ölçü sırası kullanılır (README17 Ek A: içerikten hizalama).
     """
     root = ET.parse(xml_path).getroot()
-    parts = [parse_part(p) for p in root.findall("part")]
+    # GAPS: iki part (nota, TAB); bizim yazıcı (README23): tek part, iki portre -> her portre ayrı akış
+    parts = [parse_part(p, s) for p in root.findall("part") for s in staves_of(p)]
     tab_i = [k for k, p in enumerate(parts) if any(n["fret"] >= 0 for m in p for n in m["notes"])]
     if not tab_i:
         return None

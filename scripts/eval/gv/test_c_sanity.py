@@ -31,9 +31,12 @@ def audio_evidence(path: Path, notes: np.ndarray) -> dict[str, float]:
 
 def tab_rules(xml: Path) -> dict[str, float]:
     tuning, S = STANDARD_6.tuning, len(STANDARD_6.tuning)
-    part = ET.parse(xml).getroot().findall("part")[1]  # P2 = TAB staff
+    parts = ET.parse(xml).getroot().findall("part")
+    # one part with staff 2 = TAB (README23 layout) or the older two-part layout with P2 = TAB
+    tab_notes = ([n for n in parts[0].iter("note") if n.findtext("staff") == "2"] if len(parts) == 1
+                 else list(parts[1].iter("note")))
     chords, bad_pitch, frets = [], 0, []
-    for n in part.iter("note"):
+    for n in tab_notes:
         p, s, f = n.find("pitch"), n.find(".//string"), n.find(".//fret")
         if p is None or s is None:
             continue
